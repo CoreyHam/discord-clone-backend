@@ -10,7 +10,7 @@ Processes that should run:
 1. After port 7000 starts up, pip should be upgraded and all requirements in the requirements.txt should be installed, including `psycopg2` and `Django` among other packages.
 
 ## Changing the Django PROJECT name
-1. The current project name is `myproject`. If you would like to change that name you will need to change the directory name as well as all the references to that project throughout the files in the project. That might be worth the time.
+1. The current project name is `api`. If you would like to change that name you will need to change the directory name as well as all the references to that project throughout the files in the project. That might be worth the time.
 
 ## Django Admin
 The CSRF_TRUSTED_ORIGINS setting in settings.py should be set to allow `https://*.gitpod.io` for a trusted CSRF token.
