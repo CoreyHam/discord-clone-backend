@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django.contrib.sites',
     'corsheaders',
+    'django_filters',
 
     # Custom Apps
     'discord',
