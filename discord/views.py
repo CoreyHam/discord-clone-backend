@@ -8,8 +8,10 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import Category, Server, Channel, Relationship, Message
 from .serializers import CategorySerializer, ServerSerializer, ChannelSerializer, RelationshipSerializer, MessageSerializer, UserSerializer
+from rest_framework import viewsets, permissions, filters
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
-# Create your views here.
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -21,6 +23,10 @@ class ServerViewSet(viewsets.ModelViewSet):
     serializer_class = ServerSerializer
     # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_fields = ['users']
+    search_fields = ['name']
+    ordering_fields = ['created_at']
 
 class ChannelViewSet(viewsets.ModelViewSet):
     queryset = Channel.objects.all()
@@ -52,3 +58,4 @@ class UserCreate(APIView):
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
