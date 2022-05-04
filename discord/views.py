@@ -7,7 +7,7 @@ from .models import User
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import Category, Server, Channel, Relationship, Message
-from .serializers import CategorySerializer, ServerSerializer, ChannelSerializer, RelationshipSerializer, MessageSerializer, UserSerializer
+from .serializers import CategorySerializer, ServerSerializer, ChannelSerializer, RelationshipSerializer, MessageSerializer, UserSerializer, PostMessageSerializer
 from rest_framework import viewsets, permissions, filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -43,8 +43,17 @@ class RelationshipViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
 class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all()
+    queryset = Message.objects.order_by('created_at')
     serializer_class = MessageSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_fields = ['channel']
+
+
+class PostMessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = PostMessageSerializer
     # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]

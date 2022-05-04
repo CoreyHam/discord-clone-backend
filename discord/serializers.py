@@ -29,6 +29,12 @@ class MessageSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+class PostMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('id', 'content', 'channel', 'sent_by', 'created_at', 'updated_at')
+
+
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
