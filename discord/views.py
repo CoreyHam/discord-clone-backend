@@ -33,6 +33,8 @@ class ChannelViewSet(viewsets.ModelViewSet):
     serializer_class = ChannelSerializer
     # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_fields = ['server']
 
 class RelationshipViewSet(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()
