@@ -47,6 +47,8 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
     # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_fields = ['channel']
 
 
 class UserCreate(APIView):
