@@ -7,7 +7,7 @@ from .models import User
 from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import Category, Server, Channel, Relationship, Message
-from .serializers import CategorySerializer, ServerSerializer, ChannelSerializer, RelationshipSerializer, MessageSerializer, UserSerializer, PostMessageSerializer
+from .serializers import CategorySerializer, ServerSerializer, ChannelSerializer, RelationshipSerializer, MessageSerializer, UserSerializer, PostMessageSerializer, PostServerSerializer
 from rest_framework import viewsets, permissions, filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -27,6 +27,17 @@ class ServerViewSet(viewsets.ModelViewSet):
     filter_fields = ['users']
     search_fields = ['name']
     ordering_fields = ['created_at']
+
+class PostServerViewSet(viewsets.ModelViewSet):
+    queryset = Server.objects.all()
+    serializer_class = PostServerSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_fields = ['channel']
+    search_fields = ['content']
+    ordering_fields = ['created_at']
+
 
 class ChannelViewSet(viewsets.ModelViewSet):
     queryset = Channel.objects.all()
@@ -65,6 +76,7 @@ class UserCreate(APIView):
 
     def post(self, request, format='json'):
         serializer = UserSerializer(data=request.data)
+        print("request: ", type(request.data))
         if serializer.is_valid():
             user = serializer.save()
             if user:
