@@ -14,6 +14,9 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import environ
+import django_heroku
+
+django_heroku.settings(locals())
 
 env = environ.Env()
 # Set the project base directory
